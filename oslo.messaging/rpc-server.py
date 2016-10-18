@@ -19,10 +19,14 @@ import sys
 import time
 
 from oslo_config import cfg
-from oslo_log import log as logging
+import rpc_logging
 import oslo_messaging as messaging
 
-LOG = logging.getLogger(__name__)
+Domain="rpc-server"
+rpc_logging.rpc_log_prepare(Domain)
+LOG=rpc_logging.logname(__name__)
+
+
 
 class TestEndpoint(object):
     def __init__(self, server, target=None):
@@ -39,20 +43,12 @@ class TestEndpoint(object):
         return {"method":"echo", "context":ctx, "args":args}
 
     def sleep(self, ctx, **args):
-        LON.info("%s::TestEndpoint::sleeps(ctxt=%s arg=%s) called. sleeping..."
+        LOG.info("%s::TestEndpoint::sleeps(ctxt=%s arg=%s) called. sleeping..."
                 % (self.server, str(ctx),str(args)))
         time.sleep(float(args.get("timeout", 10.0)))
-        LON.info("awake!")
+        LOG.info("awake!")
 
-def rpc_log_init():
-    logging.register_options(cfg.CONF)
-    extra_log_level_defaults = [
-            'dogpile=INFO',
-            'routes=INFO']
-    logging.set_defaults(
-            default_log_levels=logging.get_default_log_levels() +
-            extra_log_level_defaults)
-    logging.setup(cfg.CONF, "rpc-server")
+
 
 def main(argv=None):
     _usage = """Usage: %prog [options] <server name>"""
@@ -78,7 +74,7 @@ def main(argv=None):
         return False
 
     server_name = extra[0]
-    rpc_log_init()
+
     LOG.info("Running server, name=%s exchange=%s topic=%s namespace=%s"
           % (server_name, opts.exchange, opts.topic, opts.namespace))
 

@@ -19,20 +19,12 @@ import sys
 import time
 
 from oslo_config import cfg
-from oslo_log import log as logging
+import rpc_logging
 import oslo_messaging as messaging
 
-LOG = logging.getLogger(__name__)
-
-def rpc_log_init():
-    logging.register_options(cfg.CONF)
-    extra_log_level_defaults = [
-            'dogpile=INFO',
-            'routes=INFO']
-    logging.set_defaults(
-            default_log_levels=logging.get_default_log_levels() +
-            extra_log_level_defaults)
-    logging.setup(cfg.CONF, "rpc-server")
+Domain="rpc-client"
+rpc_logging.rpc_log_prepare(Domain)
+LOG=rpc_logging.logname(__name__)
 
 
 def main(argv=None):
@@ -65,7 +57,6 @@ def main(argv=None):
         print("Error: <method> not supplied!!")
         return False
 
-    rpc_log_init()
     method = extra[0]
     extra = extra[1:]
     args = {}
