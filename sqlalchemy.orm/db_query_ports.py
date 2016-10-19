@@ -21,7 +21,7 @@ import sqlalchemy.orm
 import sys
 import db_logging
 
-Domain="olsodb"
+Domain="sqlalchemy"
 db_logging.rpc_log_prepare(Domain)
 LOG=db_logging.logname(__name__)
 
