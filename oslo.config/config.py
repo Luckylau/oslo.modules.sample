@@ -47,6 +47,16 @@ def configExample():
                    default=5672,
                    help='Port number to listen on.')
     ]
+    rabbit_users = [
+
+        cfg.StrOpt('user_name',
+                   default=' ',
+                   help='user name .'),
+        cfg.StrOpt('password',
+                   default=' ',
+                   help='password .')
+    ]
+
     CONF = cfg.CONF
     CONF.register_opt(enable_api)
 
@@ -55,6 +65,7 @@ def configExample():
     CONF.register_group(rabbit_group)
     CONF.register_opts(rabbit_opts, rabbit_group)
     CONF.register_opt(rabbit_ssl_opt, rabbit_group)
+    CONF.register_opts(rabbit_users, rabbit_group)
     return CONF
 
 
@@ -78,6 +89,8 @@ def printInfo(config):
     print("rabbit.ssl_opt: " + str(config.Rabbit.ssl_opt))
     print("rabbit.host: " + config.Rabbit.host)
     print("rabbit.port: " + str(config.Rabbit.port))
+    print("rabbit.user_name: " + config.Rabbit.user_name)
+    print("rabbit.password: " + str(config.Rabbit.password))
 
 
 def main():
