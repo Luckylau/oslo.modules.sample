@@ -14,15 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from sqlalchemy import create_engine
-from neutron.db import models_v2
-from sqlalchemy.orm import exc
-import sqlalchemy.orm
 import sys
+
+import sqlalchemy.orm
+from neutron.db import models_v2
+from sqlalchemy import create_engine
+from sqlalchemy.orm import exc
+
 import rpc_logging
+
 Domain="sqlalchemy"
 rpc_logging.rpc_log_prepare(Domain)
-LOG=rpc_logging.logname(__name__)
+LOG= rpc_logging.logname(__name__)
 
 _ENGINE=None
 _SESSION_MAKER=None

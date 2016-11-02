@@ -14,16 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import rpc_logging
+import sys
+import time
+
 import oslo_messaging as messaging
 from oslo_config import cfg
+
+import rpc_logging
 from Query_db import Connection
-import time
-import sys
 
 Domain="server"
 rpc_logging.rpc_log_prepare(Domain)
-LOG=rpc_logging.logname(__name__)
+LOG= rpc_logging.logname(__name__)
 
 
 class Parameters(object):
