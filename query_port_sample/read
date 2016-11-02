@@ -1,0 +1,3 @@
+If you wish to allow the guest user to connect from a remote host, you should set the loopback_users configuration item to [].
+A complete rabbitmq.config which does this would look like:
+[{rabbit, [{loopback_users, []}]}].
